@@ -13,20 +13,18 @@ def namechanger(folder='01_xyz', pref_from_front=True, len_pref=2, len_suf=7):
 	os.chdir(folder)
 	print(os.getcwd())
 
-	for i,f in enumerate(os.listdir()):	
+	for i,f in enumerate(os.listdir()):	 
 		f_name, f_ext = os.path.splitext(f)
-
+		# Define prefix:
 		if pref_from_front:
 			f_name_pref = folder[:len_pref]
 		else:
-			f_name_pre = folder[len_pref:]
+		    f_name_pref = folder[-len_pref:]
+		# Define suffix:
 		f_name_suf = '{num:0{len_suf}d}'.format(num=i+1, len_suf=len_suf-1)
+		# Add prefix and suffix separated by '_':
 		f_name = f_name_pref + '_' + f_name_suf
-
 		new_name = '{}{}'.format(f_name, f_ext)
 		os.rename(f, new_name)
 
-namechanger(folder='01_xyz', len_suf=5)
-
- 
-
+namechanger(folder='01_xyz_input', pref_from_front=True, len_pref=2, len_suf=5)
