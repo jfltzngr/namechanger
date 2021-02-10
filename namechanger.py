@@ -52,7 +52,7 @@ def remove_exif(folderpath):
 		image = Image.open(imagepath)
 		image.save(imagepath)
 
-folderpath=r'C:\Users\Unibw\Documents\Spaces\Dacl\Students_Data\Dacl_Giersdorff_12A\Schadensbilder_12A'
+folderpath=r'<folderpath>'
 remove_exif(folderpath=folderpath)
 # uncomment to call function namechanger:
 #namechanger(folderpath=folderpath, pref_from_front=False, len_pref=3, len_suf=7)
