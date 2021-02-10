@@ -34,7 +34,7 @@ def namechanger(folderpath, pref_from_front=True, len_pref=3, len_suf=7):
 		os.rename(f, f_name_new)
 
 	# create json dict
-	dict_name = 'old_to_new_dict_' + foldername
+	dict_name = 'old_to_new_dict_' + foldername + '.json'
 	with open(dict_name, 'w') as json_file:
 		json.dump(old_to_new_dict, json_file)
 
