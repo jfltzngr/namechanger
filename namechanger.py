@@ -52,10 +52,10 @@ def remove_exif(folderpath):
 		image = Image.open(imagepath)
 		image.save(imagepath)
 
-folderpath=r'<folderpath>'
+folderpath=r'01_xyz_input'
 remove_exif(folderpath=folderpath)
 # uncomment to call function namechanger:
-#namechanger(folderpath=folderpath, pref_from_front=False, len_pref=3, len_suf=7)
+#namechanger(folderpath=folderpath, pref_from_front=True, len_pref=3, len_suf=7)
 
 
 
