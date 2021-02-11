@@ -38,8 +38,6 @@ def namechanger(folderpath, pref_from_front=True, len_pref=3, len_suf=7):
 	with open(dict_name, 'w') as json_file:
 		json.dump(old_to_new_dict, json_file)
 
-# uncomment to call function:
-
 
 def remove_exif(folderpath):
 	"""remove the exifs from images in folder.
