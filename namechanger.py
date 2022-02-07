@@ -1,7 +1,14 @@
 import os 
 import json
+import sys
+import random
+import shutil
 from PIL import Image
-   
+
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True 
+
+
 def namechanger(folderpath, remove_exif=None, pref_from_front=True, len_pref=3, len_suf=7):
 	"""change the name of files in a folder according to the folders name.
         Args:
@@ -17,30 +24,36 @@ def namechanger(folderpath, remove_exif=None, pref_from_front=True, len_pref=3, 
 	print(os.getcwd()) 
 	foldername = os.path.split(folderpath)[-1]
 	# In this dict we store the old filename as a key and the new filename as the value:
-	old_to_new_dict={}
+	old_to_new_dict = {}
+	i = 0
 
-	for i,f in enumerate(os.listdir()):	 
+	for f in os.listdir():	 
+		IsImage = True # Defines if the file is a image (or can be opened by Pillow)
 		# remove the exifs first:
 		if remove_exif:	
 			try:
 				image = Image.open(f)
 				image.save(f)
-			except:
+				image.close()
+			except OSError:
 				print('File {} could not be opened'.format(f))
-				pass
-		f_name_old, f_ext = os.path.splitext(f)
-		# Define prefix:
-		if pref_from_front:
-			f_name_pref = foldername[:len_pref]
-		else:
-		    f_name_pref = foldername[-len_pref:]
-		# Define suffix:
-		f_name_suf = '{num:0{len_suf}d}'.format(num=i, len_suf=len_suf)
-		# Add prefix and suffix separated by '_':
-		f_name_new = f_name_pref + '_' + f_name_suf
-		f_name_new = '{}{}'.format(f_name_new, f_ext)
-		old_to_new_dict[f_name_old] = f_name_new
-		os.rename(f, f_name_new)
+				IsImage = False
+		
+		if IsImage:
+			i += 1
+			f_name_old, f_ext = os.path.splitext(f)
+	        # Define prefix:
+			if pref_from_front:
+				f_name_pref = foldername[:len_pref]
+			else:
+				f_name_pref = foldername[-len_pref:]
+			# Define suffix:
+			f_name_suf = '{num:0{len_suf}d}'.format(num=i, len_suf=len_suf)
+			# Add prefix and suffix separated by '_':
+			f_name_new = f_name_pref + '_' + f_name_suf
+			f_name_new = '{}{}'.format(f_name_new, f_ext)
+			old_to_new_dict[f_name_old] = f_name_new
+			os.rename(f, f_name_new)
 
 	# create json dict
 	dict_name = 'old_to_new_dict_' + foldername  + '.json'
@@ -49,8 +62,10 @@ def namechanger(folderpath, remove_exif=None, pref_from_front=True, len_pref=3, 
 
 
 
+
+
 #Standard application:
-folderpath=r'01_xyz_input'
+folderpath=r'C:\Users\Unibw\Desktop\06_Schadensbilder_BUNG'
 # uncomment to call function namechanger:
 namechanger(folderpath=folderpath, remove_exif=True, pref_from_front=True, len_pref=2, len_suf=6)
 
